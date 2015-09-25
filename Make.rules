@@ -1,11 +1,11 @@
 #
 # Make.rules for mimesis project
 #
-# Last Modified by Inamura on 2009-07-11
+# Last Modified by Tetsunari Inamura on 2015-09-26
 #
 
 #### PROJECT directory
-PROJECT_DIR = $(HOME)/prog/mimesis
+PROJECT_DIR = $(HOME)/git-work/GitHub/mimesis
 
 
 #### targets to build
@@ -31,7 +31,7 @@ LIBS = 	$(PROJECT_LIBS) \
 #############################################
 #################### HTK ####################
 #############################################
-HTK_INCLUDE_DIR   = /usr/local/include/htk
+HTK_INCLUDE_DIR   = $(PROJECT_DIR)/ext/htk/HTKLib
 HTK_LIB = -lHTK
 
 

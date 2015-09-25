@@ -3,7 +3,7 @@ HTK_EXIST   = htk-3.4.1/README
 HTK_WORKDIR = htk
 
 all: $(HTK_SRC) $(HTK_EXIST)
-	(cd $(HTK_WORKDIR); ./configure; make all)
+	(cd $(HTK_WORKDIR); ./configure; make all; sudo make install)
 
 $(HTK_EXIST):
 	tar zxvf $(HTK_SRC)
