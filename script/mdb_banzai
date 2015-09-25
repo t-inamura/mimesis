@@ -1,0 +1,8 @@
+label:		banzai
+read_dir:	banzai/
+save_dir:	./.tmp/banzai/
+hmmfile:	banzai.hmm
+num_state:	20
+num_mixture:	5
+num_sample:	10
+hmm_type:	LEFT_TO_RIGHT

@@ -1,0 +1,99 @@
+#
+# Make.rules for mimesis project
+#
+# Last Modified by Inamura on 2009-07-11
+#
+
+#### PROJECT directory
+PROJECT_DIR = $(HOME)/prog/mimesis
+
+
+#### targets to build
+SITE_TARGETS = basic app lib
+
+#### some C++ flags
+SITE_CXX_FLAGS = -DGCC
+
+
+PROJECT_INC_DIR = $(PROJECT_DIR)/basic
+PROJECT_LIB_DIR = $(PROJECT_DIR)/lib
+PROJECT_BIN_DIR = $(PROJECT_DIR)/bin
+PROJECT_LINK_FLAGS = -lm -lX11 -L$(PROJECT_LIB_DIR) 
+
+LINK_FLAGS = \
+	$(PROJECT_LINK_FLAGS) \
+
+LIBS = 	$(PROJECT_LIBS) \
+	$(LDFLAGS) \
+	$(LDLIBS)\
+
+
+#############################################
+#################### HTK ####################
+#############################################
+HTK_INCLUDE_DIR   = /usr/local/include/htk
+HTK_LIB = -lHTK
+
+
+#### GTK & GLIB ####
+#GLIB_MODULE  = glib
+GLIB_MODULE = glib-2.0
+#GTK_MODULE   = gtk+
+GTK_MODULE  = gtk+-2.0
+GLIB_CFLAGS  = `pkg-config --cflags $(GLIB_MODULE)`
+GLIB_LDFLAGS = `pkg-config --libs $(GLIB_MODULE)`
+GTK_CFLAGS   = `pkg-config --cflags $(GTK_MODULE)`
+GTK_LDFLAGS  = `pkg-config --libs $(GTK_MODULE)`
+
+INC_DIR = $(HOME)/prog/include
+LIB_DIR = $(HOME)/prog/lib
+
+
+#LINK = g++
+COPT	 = -O3
+CC       = gcc
+CXX      = g++
+LIBDIR   = $(PROJECT_LIB_DIR)
+INCDIR   = $(PROJECT_INC_DIR)
+LDLIBS   = $(GTK_LDFLAGS)
+CFLAGS   = -Wall -g $(COPT) -D__cplusplus 
+LDFLAGS  = $(GLIB_LDFLAGS)
+CD       = cd
+
+RM   = rm -f
+CP   = cp
+CXX  = g++
+CC   = gcc
+LINK = g++
+CD   = cd
+MAKE = make
+RANLIB = ranlib
+LIB = ar -rs
+
+
+ifeq ($(OS),Linux)
+#### linux command ####
+SO  = gcc -shared -o
+LIBSFX = so
+EXESFX = 
+else
+#### Cygwin command ####
+LIBSFX = dll
+EXESFX = .exe
+TRASHSFX = stackdump
+endif
+
+
+
+#### suffix ####
+.c.o:
+	$(CC) -c $(CFLAGS) $< -o $*.o
+
+.cc.o:
+	$(CXX) -c $(CXX_FLAGS) $(CPP_FLAGS) $< -o $*.o
+
+.cxx.o:
+	$(CXX) -c $(CXX_FLAGS) $(CPP_FLAGS) $< -o $*.o
+
+.cpp.o:
+	$(CXX) -c $(CFLAGS) $< -o $*.o

@@ -1,0 +1,9 @@
+#version1
+label:		kick
+read_dir:	kick
+save_dir:	./.tmp/kick/
+hmmfile:	kick.hmm
+num_state:	20
+num_mixture:	5
+num_sample:	10
+hmm_type:	LEFT_TO_RIGHT

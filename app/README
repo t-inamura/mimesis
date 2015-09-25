@@ -1,0 +1,7 @@
+eusmimesis.l            : ミメシスのライブラリ群を euslisp から使用するためのラッパー
+learning.l		: HMMによる学習のサンプルプログラム
+recognition.l		: HMMによる認識のサンプルプログラム
+generation.l		: HMMによる時系列データ再現のサンプルプログラム
+space_create.l		: 原始シンボル空間を生成するサンプルプログラム
+
+test/			: C言語レベルでのサンプルプログラム

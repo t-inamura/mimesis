@@ -1,0 +1,15 @@
+HTK_SRC     = HTK-3.3.zip
+HTK_EXIST   = htk-3.3/bin.win32/HList.exe
+HTK_WORKDIR = htk-3.3
+
+all: htk-3.3
+
+htk-3.3: $(HTK_SRC) $(HTK_EXIST)
+	INSTALL.sh
+
+$(HTK_EXIST):
+	unzip $(HTK_SRC)
+	mkdir -p htk-3.3/bin.win32
+
+$(HTK_SRC):
+	wget http://www.iir.nii.ac.jp/tmp/$(HTK_SRC)

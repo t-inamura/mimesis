@@ -1,0 +1,61 @@
+-----------------------------------
+2003.Oct.23 Marika Hayashi
+2004.May.20 Tetsunari Inamura
+2004.Nov.18 Kazuyuki Sakamoto
+2004.Nov.21 Tetsunari Inamura
+2005.Apr.14 Takashi Ogura
+HTKその他のinstallの仕方
+----------------------------------
+
+0. HTKを用意する
+   1) a) HTKのホームページ(http://htk.eng.cam.ac.uk/)から
+	 htk/をダウンロードする
+	 # registerが必要
+	 # HTTP, FTP, CVSなどの方法がある
+      b) または、/home/jsk/inamura/project/HTK/ など
+	 適切な場所から取ってくる
+
+   2) ~/prog/HTK/に
+      htk/を解凍する
+      ~/prog/HTK/htk/
+		     HTKLib/
+		     HLMLib/
+		     HLMTools/
+      などが出来る。
+
+   3) ~/prog/HTK/htk/READMEに従ってmakeする
+      a) Linuxの場合、bin.linuxは
+	 ~/prog/HTK/bin.linux
+	 につくる。
+      b) Cygwinの場合、bin.win32は
+	 ~/prog/HTK/htk/bin.win32
+	 につくる。
+			
+1. Set PATH
+   以下をPATHに加える
+   $(HOME)/prog/HTK/bin.linux/
+
+2. glib-???() のインストール
+   a) Cygwin ならば、glib-devel (1.2.10) をインストール
+      あるいは，http://web.sfc.keio.ac.jp/~s01397ms/cygwin/　を 
+      setup において追加しインストール．この場合だと
+      Versionは、インストール時点での最新版になるはず(2004.11現在はglib-2.2.1-2)
+   b) Debian ならば、
+      dselect で glib-2.0, glib-2.0-dev をインストールする
+      Versionは、glib-2.0で固定(すでにインストールされているのでは？)
+
+3. Make.rules
+   1) Make.rulesの中のPROJECT_DIRを適宜書き換える
+      $(HOME)/prog/mimesis/
+      などのように。
+   2) $(HOME)/src/HTK/htk
+      となっている所も適宜書き換える
+      $(HOME)/prog/HTK/htk
+      などのように。
+   5) GLIB_MODULE を自分のglib環境に合わせて設定する
+      cygwin で 1.2.10 をインストールしたならそのまま．Ver.2.0 以上をインストール
+      したのならば，glib-2.0 などとする．
+
+4. basicのmake
+   1) cd basic; make
+

@@ -1,0 +1,8 @@
+label:		dummy_motion
+read_dir:	dummy_motion/
+save_dir:	./.tmp/dummy_motion/
+hmmfile:	dummy_motion.hmm
+num_state:	20
+num_mixture:	5
+num_sample:	15
+hmm_type:	LEFT_TO_RIGHT

@@ -1,0 +1,12 @@
+HTK_SRC     = HTK-3.4.tar.gz
+HTK_EXIST   = htk-3.4/README
+HTK_WORKDIR = htk
+
+all: $(HTK_SRC) $(HTK_EXIST)
+	(cd $(HTK_WORKDIR); ./configure; make all)
+
+$(HTK_EXIST):
+	tar zxvf $(HTK_SRC)
+
+$(HTK_SRC):
+	wget http://www.iir.nii.ac.jp/tmp/$(HTK_SRC)

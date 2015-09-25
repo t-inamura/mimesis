@@ -1,0 +1,9 @@
+#version1
+label:		byebye
+read_dir:	byebye/
+save_dir:	./.tmp/byebye/
+hmmfile:	byebye.hmm
+num_state:	20
+num_mixture:	5
+num_sample:	2
+hmm_type:	LEFT_TO_RIGHT

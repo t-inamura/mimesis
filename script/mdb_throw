@@ -1,0 +1,8 @@
+label:		throw
+read_dir:	throw/
+save_dir:	./.tmp/throw/
+hmmfile:	throw.hmm
+num_state:	20
+num_mixture:	5
+num_sample:	10
+hmm_type:	LEFT_TO_RIGHT

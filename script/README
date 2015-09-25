@@ -1,0 +1,9 @@
+loadするファイルのテンプレート
+
+・learning, recognition などで読み込むファイル
+learning_scriptfile_1
+learning_scriptfile_2
+
+・MotionDB::Loadで読み込むファイル
+mdb_loadfile1 など
+
