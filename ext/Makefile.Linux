@@ -1,5 +1,5 @@
-HTK_SRC     = HTK-3.4.tar.gz
-HTK_EXIST   = htk-3.4/README
+HTK_SRC     = HTK-3.4.1.tar.gz
+HTK_EXIST   = htk-3.4.1/README
 HTK_WORKDIR = htk
 
 all: $(HTK_SRC) $(HTK_EXIST)
