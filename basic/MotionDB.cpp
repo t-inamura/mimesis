@@ -11,7 +11,7 @@
  * 2004-09-14 by inamura, LoadBehaviors
  *	Detect suitable number to be read automatically, without specification
  * 2008-09-30
- *	change method name from GetNthBeh to GetNthBeh
+ *	change method name from GetNthBeh to NthBehavior
  *	integrate SetHMMtype and GetHMMtype into HMMtype
  */
 

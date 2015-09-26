@@ -1,7 +1,7 @@
 /*
  * Mds.cpp
  *
- * Last Modified on  2005 Jun 18th  by Tetsunari Inamura
+ * Last Modified on  2015 Sep 27th  by Tetsunari Inamura
  */
 
 /*
@@ -9,6 +9,8 @@
  * ニュートンラフソン法の閾値が Magic Number 
  * 状況に応じて適応的に閾値が求まって欲しい
  */
+
+#include <string.h>
 
 #include "mimesis.h"
 #include "Mds.h"

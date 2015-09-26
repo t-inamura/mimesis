@@ -1,10 +1,13 @@
 /*
  * WorkSpace.cpp
  *
- * Last Modified on 2008-07-17 by inamura
+ * Last Modified on 2015 Sep 27th by Tetsunari Inamura
  *
+ *	Copyright (c) Tetsunari Inamura 2002--2015.
  */
+
 #include <sstream>
+#include <string.h>
 
 #include "math.h"
 #include "mimesis.h"

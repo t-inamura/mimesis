@@ -6,6 +6,8 @@
 
 
 #include <assert.h>
+#include <string.h>
+
 #include "JHMM.h"
 
 using namespace std;

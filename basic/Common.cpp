@@ -4,7 +4,7 @@
 
 #include <fstream>
 #include <iostream>
-#include <string>
+#include <string.h>
 #define __COMMON_CPP__
 #include "mimesis.h"
 

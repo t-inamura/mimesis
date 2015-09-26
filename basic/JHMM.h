@@ -16,6 +16,7 @@
 #include <string>
 #include <math.h>
 #include <stdio.h>
+#include <random>
 
 #include "Behavior.h"
 

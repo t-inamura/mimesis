@@ -1,12 +1,13 @@
 /*
  * HTKUnit.cpp
  * 
- * Last Modified by Tetsunari Inamura on 2008-07-17
+ * Last Modified by Tetsunari Inamura on 2015 Sep 27
  * based on RecogUnit.cpp (old source code)
  *
  * This class manages only filename and directory name for HTK interface.
  * Real parameter data like A and B are managed by JHMM super-class.
  *
+ *	Copyright (c) Tetsunari Inamura 2002--2015.
  */
 
 
@@ -16,6 +17,8 @@
  * 2008-07-17
  *	Second trial of the Hellinger Distance implementation based on advice from Prof. Minematsu@UT
  */
+
+#include <string.h>
 
 #include "HTKUnit.h"
 
