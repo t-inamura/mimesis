@@ -1,7 +1,10 @@
 /*
  * JHMM.cpp
- * Modified : Tetsunari Inamura on 2004 Sep 13th
- * Last Modified : Tetsunari Inamura on 2008-01-17
+ *
+ * Last Modified : Tetsunari Inamura on 2015 Sep 27th
+ *
+ *	Copyright (c) Tetsunari Inamura 1999--2015.
+ *	All Rights Reserved.
  */
 
 
@@ -213,16 +216,16 @@ int JHMM::Load(const char *fname)
     }
   
   // line 2: error without <STREAMINFO>
-  if (CheckNextLineMatching (fin, "<STREAMINFO>", buf)==FALSE) return FALSE;
+  if (CheckNextLineMatching(fin, (char *)TAG_STREAMINFO, buf)==FALSE) return FALSE;
   sscanf(buf, "%s %d %d", tmpbuf, &tmpnum1, &tmpnum2);
   // line 3: error without <VECSIZE>
-  if (CheckNextLineMatching (fin, "<VECSIZE>", buf)==FALSE) return FALSE;
+  if (CheckNextLineMatching(fin, (char *)TAG_VECSIZE, buf)==FALSE) return FALSE;
   sscanf(buf, "%s %d%s", tmpbuf, &vec_size, tmpbuf2);
   if(debug&&Gdebug) cerr << "[JHMM.Load] Vec Size:" << vec_size;
   vector_size = vec_size;
 
   // 4行目 行頭が "~h" でなければエラー
-  if (CheckNextLineMatching (fin, "~h", buf)==FALSE) return FALSE;
+  if (CheckNextLineMatching(fin, (char *)TAG_TILDE_H, buf)==FALSE) return FALSE;
   sscanf(buf, "%s %s", tmpbuf, tmpbuf2);
   char tmpbuf3[MAX_STRING];
   strcpy(tmpbuf3, (tmpbuf2+1));
@@ -230,10 +233,10 @@ int JHMM::Load(const char *fname)
   SetLabel(tmpbuf3);
 
   // 5行目 <BEGINHMM> でないとエラー
-  if (CheckNextLineMatching (fin, "<BEGINHMM>", buf)==FALSE) return FALSE;
+  if (CheckNextLineMatching(fin, (char *)TAG_BEGINHMM, buf)==FALSE) return FALSE;
   sscanf(buf, "%s", tmpbuf);
   // 6行目 <NUMSTATES> でないとエラー
-  if (CheckNextLineMatching (fin, "<NUMSTATES>", buf)==FALSE) return FALSE;
+  if (CheckNextLineMatching(fin, (char *)TAG_NUMSTATES, buf)==FALSE) return FALSE;
   sscanf(buf, "%s %d", tmpbuf, &numofstate);
   if(debug&&Gdebug) cerr << "[JHMM.Load] Num Of States:" << numofstate << endl;
   num_of_state = numofstate;
@@ -255,20 +258,20 @@ int JHMM::Load(const char *fname)
       // 現在の行 <STATE> でなければエラー ただし <GCONST> だった場合はスルーパス
       if (!strncmp(buf, "<GCONST>", 8))
 	fin.getline(buf, 1000);  // GCONST の値は捨てる．再計算をする方針
-      if (strncmp(buf, "<STATE>", 7))
+      if (strncmp(buf, TAG_STATE, 7))  //TODO: Magic number
 	{
 	  tl_warning ("<STATE> doesn't come, but <%s>", buf);
 	  fin.close();
 	  return FALSE;
 	}
 #if 0
-      if (CheckThisLineMatching (fin, "<STATE>", buf)==FALSE) return FALSE;
+      if (CheckThisLineMatching(fin, TAG_STATE, buf)==FALSE) return FALSE;
 #endif
       sscanf (buf, "%s %d", tmpbuf, &cur_state);
       if(debug&&Gdebug) tl_message ("Setting %d-th State", cur_state);
 
       fin.getline(buf, 1000);
-      if (strncmp(buf, "<NUMMIXES>", 10)==0)
+      if (strncmp(buf, TAG_NUMMIXES, 10)==0)  // TODO: Magic number
 	{
 	  // <NUMMIXES> の場合 -> 混合ガウシアン
 	  sscanf(buf, "%s %d", tmpbuf, &numofmix);
@@ -279,8 +282,8 @@ int JHMM::Load(const char *fname)
 	  fin.getline(buf, 1000);
 	  for (j=0; j<numofmix; j++)
 	    {
-	      // <GCONST> であれあスルーパス．（前のlineの残りの場合）
-	      if (!strncmp(buf, "<GCONST>", 8))
+	      // <GCONST> であればスルーパス．（前のlineの残りの場合）
+	      if (!strncmp(buf, "<GCONST>", 8))  // TODO: Magic number
 		{
 		  if(debug&&Gdebug) cerr << "[JHMM.Load] Through pass the <GCONST> : " << buf << endl;
 		  sscanf(buf, "%s %lf", tmpbuf, &tmpdouble);
@@ -288,19 +291,19 @@ int JHMM::Load(const char *fname)
 		  if(debug&&Gdebug) cerr << "[JHMM.Load] Next string of <GCONST> : " << buf << endl;
 		}
 	      // <STATE> だったら次のステートへ
-	      if ((strncmp(buf, "<STATE>", 7)) == 0)
+	      if ((strncmp(buf, TAG_STATE, 7)) == 0)  // TODO: Magic number
 		{
 		  if(debug&&Gdebug) cerr << "[JHMM.Load] " << cur_state << "th state complete" << endl;
 		  break;
 		}
 	      // <TRANSP> だったら A_MATRIX のセットへ
-	      if ((strncmp(buf, "<TRANSP>", 8)) == 0)
+	      if ((strncmp(buf, "<TRANSP>", 8)) == 0)  // TODO: Magic number
 		{
 		  if(debug&&Gdebug) cerr << "[JHMM.Load] All State Setting finished!" << endl;
 		  break;
 		}
 	      // 現在の行が それ以外の場合 <MIXTURE> でないとエラー
-	      if (CheckThisLineMatching (fin, "<MIXTURE>", buf)==FALSE) return FALSE;
+	      if (CheckThisLineMatching(fin, (char *)TAG_MIXTURE, buf)==FALSE) return FALSE;
 	      sscanf(buf, "%s %d %lf", tmpbuf, &tmpnum1, &tmpdouble);
 	  
 	      cur_mix++;
@@ -308,7 +311,7 @@ int JHMM::Load(const char *fname)
 	      if(debug&&Gdebug) cerr << "[JHMM.Load] state:" << cur_state << " mix:"
 			      << cur_mix <<" weight:" << tmpdouble << endl;
 	      // 次の行 <MEAN> でないとエラー
-	      if (CheckNextLineMatching (fin, "<MEAN>", buf)==FALSE) return FALSE;
+	      if (CheckNextLineMatching(fin, (char *)TAG_MEAN, buf)==FALSE) return FALSE;
 	      sscanf(buf, "%s %d", tmpbuf, &tmpnum1);
 	  
 	      // MEAN の読み込み
@@ -324,7 +327,7 @@ int JHMM::Load(const char *fname)
 	      fin.getline(buf, 1000); // 改行コードの読み込み
 	  
 	      // 次の行 <VARIANCE> でないとエラー
-	      if (CheckNextLineMatching (fin, "<VARIANCE>", buf)==FALSE) return FALSE;
+	      if (CheckNextLineMatching(fin, (char *)TAG_VARIANCE, buf)==FALSE) return FALSE;
 	      sscanf (buf, "%s %d", tmpbuf, &tmpnum1);
 	      // VARIANCE の読み込み
 	      if(debug&&Gdebug) cerr << "[JHMM.Load] Setting " << cur_mix << "th Mixture Of " << cur_state << "th State's Variance" << endl;
@@ -354,7 +357,7 @@ int JHMM::Load(const char *fname)
 	  if(debug&&Gdebug) tl_message("Single Mixture mode");
 
 	  // 現在の行 <MEAN> でなければエラー
-	  if (CheckThisLineMatching (fin, "<MEAN>", buf)==FALSE) return FALSE;
+	  if (CheckThisLineMatching(fin, (char *)TAG_MEAN, buf)==FALSE) return FALSE;
 	  sscanf(buf, "%s %d", tmpbuf, &tmpnum1);
 	  // MEAN の読み込み
 	  if(debug&&Gdebug) tl_message ("Setting single mixture of %d-th State's Mean", cur_state);
@@ -369,7 +372,7 @@ int JHMM::Load(const char *fname)
 	  
 	  fin.getline(buf, 1000); // 改行コードの読み込み
 	  // 次の行 <VARIANCE> でないとエラー
-	  if (CheckNextLineMatching (fin, "<VARIANCE>", buf)==FALSE) return FALSE;
+	  if (CheckNextLineMatching(fin, (char *)TAG_VARIANCE, buf)==FALSE) return FALSE;
 	  sscanf(buf, "%s %d", tmpbuf, &tmpnum1);
 	  // VARIANCE の読み込み
 	  if(debug&&Gdebug) tl_message ("Setting single mixture of %d-th State's Variance", cur_state);
@@ -833,7 +836,7 @@ Behavior *JHMM::GenerateBehavior(int num, int num_q)
   Pose* new_pose=NULL;
   Behavior* ave_beh=NULL;
 
-  ave_beh = new Behavior (vector_size, sampling_time, DEFAULT_BEH_LABEL);
+  ave_beh = new Behavior (vector_size, sampling_time, (char *)DEFAULT_BEH_LABEL);
 
   for (int i=0; i<len; i++)
     {
@@ -869,7 +872,7 @@ Behavior* JHMM::BehWithQSeq(vector<int> q_seq)
   int		next_state;
   int		debug=0;
 
-  new_beh = new Behavior(vector_size, sampling_time, DEFAULT_BEH_LABEL);
+  new_beh = new Behavior(vector_size, sampling_time, (char *)DEFAULT_BEH_LABEL);
   for (int i=0; i<(int)q_seq.size(); i++)
     {
       next_state = q_seq[i];
@@ -1333,34 +1336,34 @@ void JHMM::FileOut(const char* fname)
   ofstream fout(fname);
 
   fout << "~o" << endl;
-  fout << "<STREAMINFO> 1 " << vec << endl;
-  fout << "<VECSIZE> " << vec << "<NULLD><USER>" << endl;
-  fout << "~h \"" << label << "\"" << endl;
-  fout << "<BEGINHMM>" << endl;
-  fout << "<NUMSTATES> " << num << endl;
+  fout << TAG_STREAMINFO << " 1 "  << vec   << endl;
+  fout << TAG_VECSIZE    << " "    << vec   << "<NULLD><USER>" << endl;
+  fout << TAG_TILDE_H    << " \""  << label << "\"" << endl;
+  fout << TAG_BEGINHMM   << endl;
+  fout << TAG_NUMSTATES  << " "    << num   << endl;
   
   for (i=2; i<=num-1; i++)
     {
       fout << "<STATE> " << i << endl;
       if (mix!=1)
 	{
-	  fout << "<NUMMIXES> " << mix << endl;
+		fout << TAG_NUMMIXES << " " << mix << endl;
 	}
 
       for (l=0; l<(int)state[i-2]->mix_weight.size(); l++)
 	{
 	  if (mix!=1)
 	    {
-	      fout << "<MIXTURE> " << l+1 << " " << state[i-2]->mix_weight[l] << endl;
+			fout << TAG_MIXTURE << " " << l+1 << " " << state[i-2]->mix_weight[l] << endl;
 	    }
-	  fout << "<MEAN> " << vec << endl;
+	  fout << TAG_MEAN << " " << vec << endl;
 
 	  for (j=0; j<vec; j++)
 	    {
 	      fout << " " << state[i-2]->mean[l][j];
 	    }
 	  fout << endl;
-	  fout << "<VARIANCE> " << vec << endl;
+	  fout << TAG_VARIANCE << " " << vec << endl;
 	  for (j=0; j<vec; j++)
 	    {
 	      fout << " " << state[i-2]->variance[l][j];
@@ -1405,18 +1408,18 @@ void JHMM::FileOut(const string &fname)
   ofstream fout(fname.c_str());
 
   fout << "~o" << endl;
-  fout << "<STREAMINFO> 1 " << vec << endl;
-  fout << "<VECSIZE> " << vec << "<NULLD><USER>" << endl;
-  fout << "~h \"" << label << "\"" << endl;
-  fout << "<BEGINHMM>" << endl;
-  fout << "<NUMSTATES> " << num << endl;
+  fout << TAG_STREAMINFO << " 1 "  << vec   << endl;
+  fout << TAG_VECSIZE    << " "    << vec   << "<NULLD><USER>" << endl;
+  fout << TAG_TILDE_H    << " \""  << label << "\"" << endl;
+  fout << TAG_BEGINHMM   << endl;
+  fout << TAG_NUMSTATES  << " "    << num   << endl;
   
   for (i=2; i<=num-1; i++)
     {
       fout << "<STATE> " << i << endl;
       if (mix!=1)
 	{
-	  fout << "<NUMMIXES> " << mix << endl;
+		fout << TAG_NUMMIXES << " " << mix << endl;
 	}
 
       for (l=0; l<(int)state[i-2]->mix_weight.size(); l++)
@@ -1425,14 +1428,14 @@ void JHMM::FileOut(const string &fname)
 	    {
 	      fout << "<MIXTURE> " << l+1 << " " << state[i-2]->mix_weight[l] << endl;
 	    }
-	  fout << "<MEAN> " << vec << endl;
+	  fout << TAG_MEAN << " " << vec << endl;
 
 	  for (j=0; j<vec; j++)
 	    {
 	      fout << " " << state[i-2]->mean[l][j];
 	    }
 	  fout << endl;
-	  fout << "<VARIANCE> " << vec << endl;
+	  fout << TAG_VARIANCE << " " << vec << endl;
 	  for (j=0; j<vec; j++)
 	    {
 	      fout << " " << state[i-2]->variance[l][j];

@@ -279,7 +279,7 @@ int tl_atoi (char *string, int *value)
 {
   if (integerp(string)==TL_FALSE)
     {
-      my_warning( "tetsulib", "tetsulib_atoi" );
+		my_warning( (char *)"tetsulib", (char *)"tetsulib_atoi" );
       d_print( "input string is not integer! : %s\n", string );
       return TL_FAIL;
     }

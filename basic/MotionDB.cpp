@@ -1,7 +1,7 @@
 /*
  * MotionDB.cpp
  *
- * Modified : Tetsunari Inamura on 2008-09-30
+ * Last Modified by Tetsunari Inamura on 2015 Sep 27th
  *
  */
 
@@ -574,8 +574,11 @@ int MotionDB::ExecHRest()
     sprintf (com, "cd %s; HInit -S filelist.txt -w 1.0 -l %s %s.hmm", tmp_str.c_str(), label.c_str(), label.c_str());
   
   if(debug&&Gdebug) cerr << "[MotionDB.ExecHRest] com:" << com << endl;
+
   if(debug) tl_message("Now executing HInit...");
-  system(com);
+  if (system(com)==-1)
+	  tl_warning("command line : <%s> failed", com);
+
   // checking failure of HInit
   sprintf (com, "%s/%s", tmp_str.c_str(), label.c_str());
   if (stat (com, &st1)!=0)
@@ -587,15 +590,19 @@ int MotionDB::ExecHRest()
   // change HMM filename (add suffix ".hmm")
   sprintf (com, "cp %s/%s %s/%s", tmp_str.c_str(), label.c_str(), tmp_str.c_str(), hmm_file.c_str());
   if(debug&&Gdebug) cerr << "[MotionDB.ExecHRest] com:" << com << endl;
-  system(com);
+  if (system(com)==-1)
+	  tl_warning("command line : <%s> failed", com);
+
   // Exec HRest
-  if (NumOfSample() < 4)
+  if (NumOfSample() < 4)   //TODO: Magic number
     sprintf (com, "cd %s; HRest -S filelist.txt -w 1.0 -l %s %s", tmp_str.c_str(), label.c_str(), hmm_file.c_str());
   else
     sprintf (com, "cd %s; HRest -S filelist.txt -w 1.0 -l %s %s", tmp_str.c_str(), label.c_str(), hmm_file.c_str());
   if(debug&&Gdebug) cerr << "[MotionDB.ExecHRest] com:" << com << endl;
   if(debug) tl_message("Now executing HRest...");
-  system(com);
+  if (system(com)==-1)
+	  tl_warning("command line : <%s> failed", com);
+
   // checking failure of HRest by whether time stamp is updated or not
   sprintf (com, "%s/%s", tmp_str.c_str(), label.c_str());
   stat (com, &st2);
@@ -628,7 +635,9 @@ int MotionDB::CreateSaveDir()
   tmp = "mkdir -p ";
   com = tmp + save_dir;
   if(debug&&Gdebug) tl_message ("command line : <%s>", com.c_str());
-  system(com.c_str());
+
+  if (system(com.c_str())==-1)
+	  tl_warning("command line : <%s> failed", com.c_str());
 
   tmp.erase();
   com.erase();
@@ -755,25 +764,33 @@ int MotionDB::Load(const char* fname)
     }
 
   fin.getline(buf, MAX_STRING);
-  if (tl_string_getkeyword (buf, "label:", locallabel)==TL_FALSE) return FALSE;
+  if (tl_string_getkeyword(buf, (char *)"label:", locallabel)==TL_FALSE) return FALSE;
+
   fin.getline(buf, MAX_STRING);
-  if (tl_string_getkeyword (buf, "read_dir:", loaddir)==TL_FALSE) return FALSE;
+  if (tl_string_getkeyword(buf, (char *)"read_dir:", loaddir)==TL_FALSE) return FALSE;
+
   fin.getline(buf, MAX_STRING);
-  if (tl_string_getkeyword (buf, "save_dir:", savedir)==TL_FALSE) return FALSE;
+  if (tl_string_getkeyword(buf, (char *)"save_dir:", savedir)==TL_FALSE) return FALSE;
+
   fin.getline(buf, MAX_STRING);
-  if (tl_string_getkeyword (buf, "hmmfile:", hmmfile)==TL_FALSE) return FALSE;
+  if (tl_string_getkeyword(buf, (char *)"hmmfile:", hmmfile)==TL_FALSE) return FALSE;
+
   fin.getline(buf, MAX_STRING);
-  if (tl_string_getkeyword (buf, "num_state:", tmpbuf)==TL_FALSE) return FALSE;
+  if (tl_string_getkeyword(buf, (char *)"num_state:", tmpbuf)==TL_FALSE) return FALSE;
   tl_atoi (tmpbuf, &numstate);
+
   fin.getline(buf, MAX_STRING);
-  if (tl_string_getkeyword (buf, "num_mixture:", tmpbuf)==TL_FALSE) return FALSE;
+  if (tl_string_getkeyword(buf, (char *)"num_mixture:", tmpbuf)==TL_FALSE) return FALSE;
   tl_atoi (tmpbuf, &nummix);
+
   fin.getline(buf, MAX_STRING);
-  if (tl_string_getkeyword (buf, "num_sample:", tmpbuf)==TL_FALSE) return FALSE;
+  if (tl_string_getkeyword(buf, (char *)"num_sample:", tmpbuf)==TL_FALSE) return FALSE;
   tl_atoi (tmpbuf, &numsample);
+
   fin.getline(buf, MAX_STRING);
-  if (tl_string_getkeyword (buf, "hmm_type:", tmpbuf)==TL_FALSE) return FALSE;
+  if (tl_string_getkeyword(buf, (char *)"hmm_type:", tmpbuf)==TL_FALSE) return FALSE;
   hmmtype = query_hmmtype_enum (tmpbuf);
+
   fin.close();
   Load (loaddir, savedir, locallabel, hmmfile, numsample, nummix, numstate, hmmtype);
 

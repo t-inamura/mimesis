@@ -224,7 +224,8 @@ int HTKUnit::CreateWorkDir()
   tmp = "mkdir -p ";
   com = tmp + work_dir;
   if(debug&&Gdebug) cerr << "[RecogUnit.CheckWorkDir] com:" << com << endl;
-  system(com.c_str());
+  if (system(com.c_str())==-1)
+	  tl_warning("command line : <%s> failed", com.c_str());
 
   tmp.erase();
   com.erase();

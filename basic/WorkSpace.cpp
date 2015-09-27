@@ -552,31 +552,31 @@ int WorkSpace::LoadVersion1 (void)
 	}
       if (!end_flag)
 	{
-	  if (tl_string_getkeyword (buf, "label:", label)==TL_FALSE) break;
+		if (tl_string_getkeyword(buf, (char *)"label:", label)==TL_FALSE) break;
 	  
 	  fin.getline(buf, MAX_STRING);
-	  if (tl_string_getkeyword (buf, "read_dir:", read_dir)==TL_FALSE) break;
+	  if (tl_string_getkeyword(buf, (char *)"read_dir:", read_dir)==TL_FALSE) break;
 	  
 	  fin.getline(buf, MAX_STRING);
-	  if (tl_string_getkeyword (buf, "save_dir:", save_dir)==TL_FALSE) break;
+	  if (tl_string_getkeyword(buf, (char *)"save_dir:", save_dir)==TL_FALSE) break;
 	  
 	  fin.getline(buf, MAX_STRING);
-	  if (tl_string_getkeyword (buf, "hmmfile:", hmmfile)==TL_FALSE) break;
+	  if (tl_string_getkeyword(buf, (char *)"hmmfile:", hmmfile)==TL_FALSE) break;
 	  
 	  fin.getline(buf, MAX_STRING);
-	  if (tl_string_getkeyword (buf, "num_state:", tmpbuf)==TL_FALSE) break;
+	  if (tl_string_getkeyword(buf, (char *)"num_state:", tmpbuf)==TL_FALSE) break;
 	  tl_atoi(tmpbuf, &numstate);
 	  
 	  fin.getline(buf, MAX_STRING);
-	  if (tl_string_getkeyword (buf, "num_mixture:", tmpbuf)==TL_FALSE) break;
+	  if (tl_string_getkeyword(buf, (char *)"num_mixture:", tmpbuf)==TL_FALSE) break;
 	  tl_atoi(tmpbuf, &nummix);
 	  
 	  fin.getline(buf, MAX_STRING);
-	  if (tl_string_getkeyword (buf, "num_sample:", tmpbuf)==TL_FALSE) break;
+	  if (tl_string_getkeyword(buf, (char *)"num_sample:", tmpbuf)==TL_FALSE) break;
 	  tl_atoi(tmpbuf, &numsample);
 
 	  fin.getline(buf, MAX_STRING);
-	  if (tl_string_getkeyword (buf, "hmm_type:", tmpbuf)==TL_FALSE) break;
+	  if (tl_string_getkeyword(buf, (char *)"hmm_type:", tmpbuf)==TL_FALSE) break;
 	  // script file の中の記述から HmmType を求める
 	  type = query_hmmtype_enum (tmpbuf);
 	  if ((int)type==FALSE) tl_warning ("HmmType is strange : %s", buf);
@@ -627,7 +627,7 @@ int WorkSpace::LoadVersion2 (void)
 	{ end_flag = TRUE;   break; }
       if (!end_flag)
 	{
-	  if (tl_string_getkeyword (buf, "filename:", tmpbuf)==TL_FALSE) break;
+	  if (tl_string_getkeyword(buf, (char *)"filename:", tmpbuf)==TL_FALSE) break;
 	  mdb = new MotionDB();
 	  mdb->Load(tmpbuf);
 	  if(debug&&Gdebug) tl_message ("Add: %s", tmpbuf);
@@ -669,7 +669,7 @@ int WorkSpace::LoadVersion3 (const char *arg)
 	{ end_flag = TRUE;  break;  }
       if (end_flag==TRUE)
 	{
-	  if (tl_string_getkeyword (buf, "label_num:", tmpbuf)==TL_FALSE) break;
+	  if (tl_string_getkeyword(buf, (char *)"label_num:", tmpbuf)==TL_FALSE) break;
 	  tl_atoi (tmpbuf, &label_num);
 
 	  fin.getline(buf,MAX_STRING);
@@ -685,13 +685,13 @@ int WorkSpace::LoadVersion3 (const char *arg)
 	    }
 	  if(debug&&Gdebug) cerr << endl;
 	  fin.getline(buf, MAX_STRING);
-	  if (tl_string_getkeyword (buf, "read_dir:", read_dir)==TL_FALSE) break;
+	  if (tl_string_getkeyword(buf, (char *)"read_dir:", read_dir)==TL_FALSE) break;
 
 	  fin.getline(buf, MAX_STRING);
-	  if (tl_string_getkeyword (buf, "scale_dir:", scale_dir)==TL_FALSE) break;
+	  if (tl_string_getkeyword(buf, (char *)"scale_dir:", scale_dir)==TL_FALSE) break;
 
 	  fin.getline(buf, MAX_STRING);
-	  if (tl_string_getkeyword (buf, "save_dir:", save_dir)==TL_FALSE) break;
+	  if (tl_string_getkeyword(buf, (char *)"save_dir:", save_dir)==TL_FALSE) break;
 
 	  fin.getline(buf, MAX_STRING);
 	  if (tl_strmember(buf, "num_state:")==TL_FALSE) break;
@@ -727,12 +727,12 @@ int WorkSpace::LoadVersion3 (const char *arg)
 	    }
 	  if(debug&&Gdebug) cerr << endl;
 	  fin.getline(buf, MAX_STRING);
-	  if (tl_string_getkeyword (buf, "hmm_type:", typestr)==TL_FALSE) break;
+	  if (tl_string_getkeyword(buf, (char *)"hmm_type:", typestr)==TL_FALSE) break;
 	  hmmtype = query_hmmtype_enum (typestr);
 	  if ((int)hmmtype==FALSE) tl_warning ("HmmType is strange : %s", buf);
 
 	  fin.getline(buf, MAX_STRING);
-	  if (tl_string_getkeyword (buf, "space_dim:", tmpbuf)==TL_FALSE) break;
+	  if (tl_string_getkeyword(buf, (char *)"space_dim:", tmpbuf)==TL_FALSE) break;
 	  tl_atoi (tmpbuf, &space_dim);
 
 	  fin.getline(buf, MAX_STRING);
@@ -867,7 +867,8 @@ int WorkSpace::CreateWorkDir()
   com = tmp + work_dir;
 
   if(debug&&Gdebug) tl_message ("com: %s", com.c_str());
-  system(com.c_str());
+  if (system(com.c_str())==-1)
+	  tl_warning("system: [%s] returns error", com.c_str());
   
   tmp.erase();
   com.erase();

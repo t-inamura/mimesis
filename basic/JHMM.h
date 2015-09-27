@@ -1,10 +1,11 @@
 /*
  * JHMM.h
  * Hidden Markov Model structure
- * Last Update : 2007-06-18 : for ICONIP, estimated stay time is added, Interpolation method is added
- * Last update : 2007-09-08 : for ICRA,   interpolation even if the num of states are different, is added
+ * Update : 2007-06-18 : for ICONIP, estimated stay time is added, Interpolation method is added
+ * update : 2007-09-08 : for ICRA,   interpolation even if the num of states are different, is added
+ * 
+ * Last modified by Tetsunari Inamura on 2015 Sep 27th
  */
-
 
 
 #ifndef __JHMM_H__
@@ -27,6 +28,19 @@ using namespace std;
 
 #define GEN_NUM			30		// 平均手法で生成する際の O を求めるときの繰り返し回数
 #define GEN_NUM_Q		10		// 平均手法で生成する際の Q を求めるときの繰り返し回数
+
+#define TAG_STREAMINFO    "<STREAMINFO>"
+#define TAG_VECSIZE       "<VECSIZE>"
+#define TAG_TILDE_H       "~h"
+#define TAG_BEGINHMM      "<BEGINHMM>"
+#define TAG_NUMSTATES     "<NUMSTATES>"
+#define TAG_MIXTURE       "<MIXTURE>"
+#define TAG_STATE         "<STATE>"
+#define TAG_NUMMIXES      "<NUMMIXES>"
+#define TAG_MEAN          "<MEAN>"
+#define TAG_VARIANCE      "<VARIANCE>"
+
+
 
 /*
  * HMMのタイプ
