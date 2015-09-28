@@ -13,6 +13,9 @@
    以下をPATHに加える
    /usr/local/bin/
 
+   環境変数 MIMESIS_TOP_DIR を git clone したディレクトリの下の mdb に設定する
+   Set the environment variable MIMESIS_TOP_DIR to the [directory]/mdb, where [directory] means the direcoty used by git clone.
+
 2. glib のインストール
    a) Cygwin ならば、glib-devel (1.2.10) をインストール
       あるいは，http://web.sfc.keio.ac.jp/~s01397ms/cygwin/　を 

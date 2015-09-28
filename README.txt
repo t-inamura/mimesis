@@ -1,6 +1,15 @@
 ******************************************************
-0. How to execute sample programs  (app/test)
+0. Installation
 ******************************************************
+
+First of all, please read the INSTALL.txt to install the mimesis package.
+
+
+
+******************************************************
+1. How to execute sample programs  (app/test)
+******************************************************
+
 
 * Learning of patterns
 
@@ -37,7 +46,7 @@ This file describes the location of recognized proto-symbol in the phase space.
 
 
 ******************************************************
-1. Directory & file configuration
+2. Directory & file configuration
 ******************************************************
 
 mimesis/
@@ -82,7 +91,7 @@ mimesis/
 
 
 ******************************************************
-2. mimesis/basic/ 
+3. mimesis/basic/ 
 ******************************************************
 
 Behavior
