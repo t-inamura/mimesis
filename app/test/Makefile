@@ -9,7 +9,7 @@ TARGET = generation learning recognition space_create test similarity extra_test
 CFLAGS  += -g -std=gnu++0x -I$(PROJECT_INC_DIR) $(GLIB_CFLAGS) 
 CXX_FLAGS = -g -Wall -O2 -std=gnu++0x -D__cplusplus -I$(PROJECT_INC_DIR) $(GLIB_CFLAGS)
 
-LDFLAGS += -L$(LIB_DIR) -lmimesis -liirlib
+LDFLAGS += -L$(LIB_DIR) -lmimesis -liirlib -Wl,-rpath=../../lib
 
 all: $(TARGET)
 

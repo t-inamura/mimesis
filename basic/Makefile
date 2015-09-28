@@ -27,13 +27,13 @@ CFLAGS    += -fPIC
 CXX_FLAGS += -fPIC
 endif
 
-TARGET   = $(LIB_DIR)/$(LPFX)mimesis.$(LSFX)
+TARGET   = $(PROJECT_LIB_DIR)/$(LPFX)mimesis.$(LSFX)
 
 all:
 	make $(TARGET)
 
 install:
-	install $(TARGET)  $(LIB_DIR)
+	install $(TARGET)  $(PROJECT_LIB_DIR)
 #	install -d $(INC_DIR)/mimesis
 #	install $(HEADERS) $(INC_DIR)/mimesis
 #	install mimesis.h  $(INC_DIR)
