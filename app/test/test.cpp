@@ -1,10 +1,13 @@
 /*
  * test
- * Last Modified by Tetsunari Inamura on 2008-01-17
+ *
+ * Last Modified on 2015 Sep 28th by Tetsunari Inamura
+ *
  */
 
 #include <sys/types.h>
 #include <unistd.h>
+#include <string.h>
 
 #include <mimesis.h>
 #include <JHMM.h>

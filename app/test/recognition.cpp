@@ -1,17 +1,19 @@
 /*
- * 原始シンボル空間を使った行動の認識結果を表示するテスト
+ * Test code to display the recognition result by proto-symbol space
  *
- * Modified: Tetsunari Inamura on 2008-01-10
+ * Last Modified on 2015 Sep 28th by Tetsunari Inamura
+ *
  */
 
 #include <unistd.h>
+#include <string.h>
 
 #include "mimesis.h"
 #include "Behavior.h"
 #include "WorkSpace.h"
 
-#define	DEFAULT_SCRIPT_FILE	"../../script/learning_scriptfile_3"
-#define	DEFAULT_INPUT_BEHAVIOR	"../../mdb/punch/punch1.beh"
+#define	DEFAULT_SCRIPT_FILE	    "../../script/learning_scriptfile_3"
+#define	DEFAULT_INPUT_BEHAVIOR  "../../mdb/punch/punch1.beh"
 
 char script_file[MAX_STRING];
 char input_behavior[MAX_STRING];

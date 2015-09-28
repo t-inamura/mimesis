@@ -1,11 +1,14 @@
 /*
- * HMM学習のテスト
- * Modified : Tetsunari Inamura on 2005 Jan 21st
- * Last Modified : Tetsunari Inamura on 2008-01-10
+ * Test code for HMM learning 
+ *
+ * Last Modified on 2015 Sep 28th by Tetsunari Inamura 
+ *
  */
 
 
 #include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "mimesis.h"
 #include "JHMM.h"

@@ -1,7 +1,12 @@
 /*
- * 原始シンボル空間をつくるテスト(ファイルアウトまで)
- * Last Modified on 2008-07-14 by Tetsunari Inamura 
+ * Test code to create proto-symbol space
+ *
+ * Last Modified on 2015 Sep 28th by Tetsunari Inamura
+ *
  */
+
+#include <string.h>
+
 #include <mimesis.h>
 #include <JHMM.h>
 #include <Behavior.h>

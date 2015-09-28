@@ -1,13 +1,13 @@
 /*
  * Test program for Extrapolation & Interpolation of HMM
  *
- * Last modified on 2006 Sep 20th by Tetsunari Inamura 
- * Last modified on 2007 Jun 30th by Tetsunari Inamura 
+ * Last modified on 2015 Sep 28th by Tetsunari Inamura 
  *
  */
 
 #include <sys/types.h>
 #include <unistd.h>
+#include <string.h>
 
 #include <mimesis.h>
 #include <JHMM.h>

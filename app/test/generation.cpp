@@ -1,12 +1,14 @@
 /*
  * Behavior Generation Test
  *
- * Last modified on 2008-01-10 by Tetsunari Inamura 
+ * Last modified on 2015 Sep 28th by Tetsunari Inamura 
  *
  */
 
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include <mimesis.h>
 #include <JHMM.h>
