@@ -12,8 +12,11 @@
 #include "Behavior.h"
 #include "WorkSpace.h"
 
-#define	DEFAULT_SCRIPT_FILE	    "../../script/learning_scriptfile_3"
-#define	DEFAULT_INPUT_BEHAVIOR  "../../mdb/punch/punch1.beh"
+#define	DEFAULT_SCRIPT_FILE	    "script/learning_scriptfile_3"
+#define	DEFAULT_INPUT_BEHAVIOR  "mdb/punch/punch1.beh"
+
+#define DEFAULT_DISTANCE_FILE   "script/symbol_data/tmp_distance_vector"
+#define DEFAULT_SPACE_FILE      "script/symbol_data/tmp_dim.spc"
 
 char script_file[MAX_STRING];
 char input_behavior[MAX_STRING];
@@ -31,19 +34,28 @@ int print_usage (void)
 int get_args (int argc, char **argv)
 {
   int	i;
-  strcpy (script_file,    DEFAULT_SCRIPT_FILE);
-  strcpy (input_behavior, DEFAULT_INPUT_BEHAVIOR);
+  string          script_file(getenv("MIMESIS_TOP_DIR"));
+  string  input_behavior_file(getenv("MIMESIS_TOP_DIR"));
+ 
+  script_file         += "/";
+  script_file         += DEFAULT_SCRIPT_FILE;
+  input_behavior_file += "/";
+  input_behavior_file += DEFAULT_INPUT_BEHAVIOR;
+  //strcpy (script_file,    DEFAULT_SCRIPT_FILE);
+  //strcpy (input_behavior, DEFAULT_INPUT_BEHAVIOR);
 
   for (i=1; i<argc;)
     {
       if (tl_strmember (argv[i], "--rc")) 
 	{
-	  strcpy (script_file, argv[++i]);
+		//strcpy (script_file, argv[++i]);
+		script_file = argv[++i];
 	  i++;
 	}
       else if (tl_strmember (argv[i], "--target")) 
 	{
-	  strcpy (input_behavior, argv[++i]);
+		input_behavior_file = argv[++i];
+		//strcpy (input_behavior, argv[++i]);
 	  i++;
 	}
       else if (tl_strmember (argv[i], "--debug"))
@@ -55,8 +67,8 @@ int get_args (int argc, char **argv)
       else 
 	{ print_usage(); exit(0);}
     }
-  tl_message ("script file is : %s", script_file);  
-  tl_message ("input  file is : %s", input_behavior);  
+  tl_message ("script file is : %s",         script_file.c_str());  
+  tl_message ("input  file is : %s", input_behavior_file.c_str());  
   return TRUE;
 }
 

@@ -1,5 +1,5 @@
 label:		squat
-read_dir:	squat/
+read_dir:	mdb/squat/
 save_dir:	./.tmp/squat/
 hmmfile:	squat.hmm
 num_state:	20

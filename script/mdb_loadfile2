@@ -1,5 +1,5 @@
 label:		dummy_motion
-read_dir:	dummy_motion/
+read_dir:	mdb/dummy_motion/
 save_dir:	./.tmp/dummy_motion/
 hmmfile:	dummy_motion.hmm
 num_state:	20

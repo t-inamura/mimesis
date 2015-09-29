@@ -1,5 +1,5 @@
 label:		banzai
-read_dir:	banzai/
+read_dir:	mdb/banzai/
 save_dir:	./.tmp/banzai/
 hmmfile:	banzai.hmm
 num_state:	20

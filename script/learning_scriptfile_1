@@ -1,5 +1,5 @@
 #version2
-filename:	../../script/mdb_15_squat
-filename:	../../script/mdb_15_kick
-filename:	../../script/mdb_15_punch
+filename:	script/mdb_squat
+filename:	script/mdb_kick
+filename:	script/mdb_punch
 

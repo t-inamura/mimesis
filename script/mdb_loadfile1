@@ -1,5 +1,5 @@
 label:		ashibum
-read_dir:	ashibum/
+read_dir:	mdb/ashibum/
 save_dir:	./.tmp/ashibum/
 hmmfile:	ashibum.hmm
 num_state:	20

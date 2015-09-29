@@ -1,5 +1,5 @@
 label:		punch
-read_dir:	punch/
+read_dir:	mdb/punch/
 save_dir:	./.tmp/punch/
 hmmfile:	punch.hmm
 num_state:	20

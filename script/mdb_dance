@@ -1,5 +1,5 @@
 label:		dance
-read_dir:	dance/
+read_dir:	mdb/dance/
 save_dir:	./.tmp/dance/
 hmmfile:	dance.hmm
 num_state:	20
