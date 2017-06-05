@@ -15,6 +15,7 @@
  *	integrate SetHMMtype and GetHMMtype into HMMtype
  */
 
+#include <unistd.h>
 #include <stdio.h>
 #include <assert.h>
 #include <sys/stat.h>

@@ -1,7 +1,7 @@
 include ../Make.rules
 
-CFLAGS    += -I. -std=gnu++0x $(GLIB_CFLAGS)
-CXX_FLAGS  = -Wall -g -O2 -std=gnu++0x -D__cplusplus $(GLIB_CFLAGS) -I../include -I$(INC_DIR)
+CFLAGS    += -I. -std=gnu++11 $(GLIB_CFLAGS)
+CXX_FLAGS  = -Wall -g -O2 -std=gnu++11 -D__cplusplus $(GLIB_CFLAGS) -I../include -I$(INC_DIR)
 LDFLAGS    = -L$(PROJECT_LIB_DIR) -L$(LIB_DIR)
 
 HEADERS = JHMM.h Behavior.h Mds.h MotionDB.h HTKUnit.h PsymbolSpace.h WorkSpace.h
