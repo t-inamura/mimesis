@@ -4,5 +4,5 @@ save_dir:	./.tmp/squat/
 hmmfile:	squat.hmm
 num_state:	20
 num_mixture:	5
-num_sample:	10
+num_sample:	12
 hmm_type:	LEFT_TO_RIGHT

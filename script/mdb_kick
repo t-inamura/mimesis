@@ -1,4 +1,3 @@
-#version1
 label:		kick
 read_dir:	mdb/kick
 save_dir:	./.tmp/kick/
